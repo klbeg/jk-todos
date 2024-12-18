@@ -1,7 +1,6 @@
-import { Text, View } from 'react-native'
-import { StyleSheet } from 'react-native'
-import Checkbox from 'expo-checkbox'
+import { Text, View, StyleSheet } from 'react-native'
 import SingleTodo from './SingleTodo'
+import TodoCard from './TodoCard'
 
 export type SingleTodoType = {
   task_uuid: string
@@ -18,26 +17,18 @@ type Props = {
 }
 
 export default function SingleDateTodos({ date, todos }: Props) {
-  console.log('date', date)
-  console.log('todos', todos)
   return (
     //  Single Date Todo Wrapper
     <View style={styles.singleDateTodoContainer}>
       <Text style={styles.header}>{date}</Text>
       {/* Task Wrapper */}
-      <View>
+      <View style={styles.singleTodoContainer}>
         {/* Single Todo */}
         {todos.map((todo: SingleTodoType) => (
-          <SingleTodo todo={todo} />
+          <TodoCard>
+            <SingleTodo todo={todo} key={todo.task_uuid} />
+          </TodoCard>
         ))}
-        {/* <View style={styles.singleTodoContainer}>
-          <Checkbox value={true} style={styles.checkbox} />
-          <Text>This is my second to do</Text>
-        </View>
-        <View style={styles.singleTodoContainer}>
-          <Checkbox value={true} style={styles.checkbox} />
-          <Text>This is my third to do</Text>
-        </View> */}
       </View>
     </View>
   )
@@ -48,12 +39,18 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: 20,
     marginBottom: 6,
+    paddingLeft: 6,
+    paddingRight: 6,
   },
   singleDateTodoContainer: {
-    marginLeft: 6,
+    marginTop: 6,
+    marginBottom: 16,
+    width: '100%',
   },
   singleTodoContainer: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
+    paddingLeft: 6,
+    paddingRight: 6,
   },
   checkbox: {
     marginRight: 4,

@@ -1,19 +1,21 @@
-import { Text, View } from 'react-native'
-import { StyleSheet } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import Checkbox from 'expo-checkbox'
 import { SingleTodoType } from './SingleDateTodos'
+import { useState } from 'react'
 
 type Props = { todo: SingleTodoType }
 
 export default function SingleTodo({ todo }: Props) {
-  console.log('todo prop', todo.body)
+  const initialIsCompleted = todo.completed_at ? true : false
+  const [isCompleted, setIsCompleted] = useState<boolean>(initialIsCompleted)
   return (
     <View style={styles.singleTodoContainer}>
       <Checkbox
-        value={todo.completed_at ? true : false}
+        value={isCompleted}
         style={styles.checkbox}
+        onValueChange={setIsCompleted}
       />
-      <Text>{todo.body}</Text>
+      <Text style={styles.todoText}>{todo.body}</Text>
     </View>
   )
 }
@@ -21,8 +23,17 @@ export default function SingleTodo({ todo }: Props) {
 const styles = StyleSheet.create({
   singleTodoContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 6,
+    marginBottom: 6,
+    marginLeft: 8,
+  },
+  todoText: {
+    fontSize: 20,
+    letterSpacing: 0.25,
+    fontFamily: 'Nippo-Variable',
   },
   checkbox: {
-    marginRight: 4,
+    marginRight: 8,
   },
 })
